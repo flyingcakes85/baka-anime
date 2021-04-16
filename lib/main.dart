@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.dark(),
+        accentColor: Colors.red,
       ),
       themeMode: ThemeMode.dark,
       home: MyHomePage(title: Consts.APP_TITLE),
@@ -73,10 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(
                   "Trending",
                   textAlign: TextAlign.left,
-                  style: GoogleFonts.poiretOne(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2),
+                  style: Consts.categoryHeading,
                 ),
               ],
             ),
@@ -89,7 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.red.shade200,
+              ));
             },
           ),
         ],
