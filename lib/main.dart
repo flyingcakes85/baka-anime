@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/anime.dart';
@@ -52,13 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: () {})],
         title: Center(
           child: Text(
-            "BAKA CLUB",
+            Consts.APP_TITLE,
             style: Consts.appTitleTextStyle,
           ),
         ),
         backgroundColor: Consts.APP_BAR_COLOR,
       ),
-      backgroundColor: Color(0xff121212),
+      backgroundColor: Consts.BACKGROUND_COLOR,
       body: Column(
         children: [
           Container(
@@ -68,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Icon(
                   Icons.trending_up,
-                  color: Colors.red.shade300,
+                  color: Consts.shade,
                 ),
                 SizedBox(width: 8),
                 Text(
@@ -87,16 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-              return Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: Colors.red.shade200,
-              ));
+              return Center(child: CircularProgressIndicator());
             },
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red.shade300,
+        backgroundColor: Consts.shade,
         onPressed: () {},
         tooltip: 'SEARCH',
         child: Icon(Icons.search),

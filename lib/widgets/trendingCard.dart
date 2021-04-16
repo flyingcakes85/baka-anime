@@ -1,7 +1,6 @@
 import 'package:animeapidemo/anime.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TrendingCard {
   static Container trendingCard(AsyncSnapshot<Anime> snapshot) {
@@ -44,19 +43,17 @@ class TrendingCard {
                     left: 115,
                     top: 8,
                     child: Container(
-                      width: 174,
-                      child: Text(
-                        snapshot.data.data
-                            .elementAt(index)
-                            .attributes
-                            .titles
-                            .en,
-                        overflow: TextOverflow.fade,
-                        maxLines: 2,
-                        style: GoogleFonts.oxygen(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    )),
+                        width: 174,
+                        child: Text(
+                          snapshot.data.data
+                              .elementAt(index)
+                              .attributes
+                              .titles
+                              .en,
+                          overflow: TextOverflow.fade,
+                          maxLines: 2,
+                          style: Consts.trendCardHeading,
+                        ))),
                 Positioned(
                     left: 115,
                     top: 58,
@@ -86,7 +83,7 @@ class TrendingCard {
                         snapshot.data.data.elementAt(index).attributes.synopsis,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 4,
-                        style: Consts.detailsTextStyle,
+                        style: Consts.trendCardDetails,
                       ),
                     ))
               ],
