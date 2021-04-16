@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
-import 'package:animeapidemo/anime.dart';
+import 'package:animeapidemo/anime_classes/trending_anime.dart';
 import 'package:animeapidemo/widgets/trendingCard.dart';
 
 void main() {
@@ -34,11 +34,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<Anime> futureAnime;
+  Future<TrendingAnime> futureAnime;
   @override
   void initState() {
     super.initState();
-    futureAnime = ApiInterface.fetchAnime();
+    futureAnime = ApiInterface.fetchTrendingAnime();
   }
 
   @override
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          FutureBuilder<Anime>(
+          FutureBuilder<TrendingAnime>(
             future: futureAnime,
             builder: (context, snapshot) {
               if (snapshot.hasData) {

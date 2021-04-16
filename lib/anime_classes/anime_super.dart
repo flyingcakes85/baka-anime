@@ -1,69 +1,3 @@
-import 'dart:convert';
-
-Anime animeFromMap(String str) => Anime.fromMap(json.decode(str));
-
-String animeToMap(Anime data) => json.encode(data.toMap());
-
-class Anime {
-  Anime({
-    this.data,
-  });
-
-  List<Datum> data;
-
-  factory Anime.fromMap(Map<String, dynamic> json) => Anime(
-        data: json["data"] == null
-            ? null
-            : List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "data": data == null
-            ? null
-            : List<dynamic>.from(data.map((x) => x.toMap())),
-      };
-}
-
-class Datum {
-  Datum({
-    this.id,
-    this.type,
-    this.links,
-    this.attributes,
-    this.relationships,
-  });
-
-  String id;
-  String type;
-  DatumLinks links;
-  Attributes attributes;
-  Map<String, Relationship> relationships;
-
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
-        id: json["id"] == null ? null : json["id"],
-        type: json["type"] == null ? null : json["type"],
-        links: json["links"] == null ? null : DatumLinks.fromMap(json["links"]),
-        attributes: json["attributes"] == null
-            ? null
-            : Attributes.fromMap(json["attributes"]),
-        relationships: json["relationships"] == null
-            ? null
-            : Map.from(json["relationships"]).map((k, v) =>
-                MapEntry<String, Relationship>(k, Relationship.fromMap(v))),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "type": type == null ? null : type,
-        "links": links == null ? null : links.toMap(),
-        "attributes": attributes == null ? null : attributes.toMap(),
-        "relationships": relationships == null
-            ? null
-            : Map.from(relationships)
-                .map((k, v) => MapEntry<String, dynamic>(k, v.toMap())),
-      };
-}
-
 class Attributes {
   Attributes({
     this.createdAt,
@@ -382,19 +316,59 @@ class Titles {
       };
 }
 
-class DatumLinks {
-  DatumLinks({
+class DataLinks {
+  DataLinks({
     this.self,
   });
 
   String self;
 
-  factory DatumLinks.fromMap(Map<String, dynamic> json) => DatumLinks(
+  factory DataLinks.fromMap(Map<String, dynamic> json) => DataLinks(
         self: json["self"] == null ? null : json["self"],
       );
 
   Map<String, dynamic> toMap() => {
         "self": self == null ? null : self,
+      };
+}
+
+class Data {
+  Data({
+    this.id,
+    this.type,
+    this.links,
+    this.attributes,
+    this.relationships,
+  });
+
+  String id;
+  String type;
+  DataLinks links;
+  Attributes attributes;
+  Map<String, Relationship> relationships;
+
+  factory Data.fromMap(Map<String, dynamic> json) => Data(
+        id: json["id"] == null ? null : json["id"],
+        type: json["type"] == null ? null : json["type"],
+        links: json["links"] == null ? null : DataLinks.fromMap(json["links"]),
+        attributes: json["attributes"] == null
+            ? null
+            : Attributes.fromMap(json["attributes"]),
+        relationships: json["relationships"] == null
+            ? null
+            : Map.from(json["relationships"]).map((k, v) =>
+                MapEntry<String, Relationship>(k, Relationship.fromMap(v))),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id == null ? null : id,
+        "type": type == null ? null : type,
+        "links": links == null ? null : links.toMap(),
+        "attributes": attributes == null ? null : attributes.toMap(),
+        "relationships": relationships == null
+            ? null
+            : Map.from(relationships)
+                .map((k, v) => MapEntry<String, dynamic>(k, v.toMap())),
       };
 }
 
@@ -434,5 +408,61 @@ class RelationshipLinks {
   Map<String, dynamic> toMap() => {
         "self": self == null ? null : self,
         "related": related == null ? null : related,
+      };
+}
+
+class DatumLinks {
+  DatumLinks({
+    this.self,
+  });
+
+  String self;
+
+  factory DatumLinks.fromMap(Map<String, dynamic> json) => DatumLinks(
+        self: json["self"] == null ? null : json["self"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "self": self == null ? null : self,
+      };
+}
+
+class Datum {
+  Datum({
+    this.id,
+    this.type,
+    this.links,
+    this.attributes,
+    this.relationships,
+  });
+
+  String id;
+  String type;
+  DatumLinks links;
+  Attributes attributes;
+  Map<String, Relationship> relationships;
+
+  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+        id: json["id"] == null ? null : json["id"],
+        type: json["type"] == null ? null : json["type"],
+        links: json["links"] == null ? null : DatumLinks.fromMap(json["links"]),
+        attributes: json["attributes"] == null
+            ? null
+            : Attributes.fromMap(json["attributes"]),
+        relationships: json["relationships"] == null
+            ? null
+            : Map.from(json["relationships"]).map((k, v) =>
+                MapEntry<String, Relationship>(k, Relationship.fromMap(v))),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id == null ? null : id,
+        "type": type == null ? null : type,
+        "links": links == null ? null : links.toMap(),
+        "attributes": attributes == null ? null : attributes.toMap(),
+        "relationships": relationships == null
+            ? null
+            : Map.from(relationships)
+                .map((k, v) => MapEntry<String, dynamic>(k, v.toMap())),
       };
 }

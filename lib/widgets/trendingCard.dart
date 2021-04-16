@@ -1,9 +1,9 @@
-import 'package:animeapidemo/anime.dart';
+import 'package:animeapidemo/anime_classes/trending_anime.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:flutter/material.dart';
 
 class TrendingCard {
-  static Container trendingCard(AsyncSnapshot<Anime> snapshot) {
+  static Container trendingCard(AsyncSnapshot<TrendingAnime> snapshot) {
     return Container(
       height: 155,
       child: ListView.separated(
