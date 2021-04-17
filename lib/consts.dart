@@ -16,6 +16,11 @@ class Consts {
     fontSize: 22,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle animeDetailsText = GoogleFonts.cantarell(fontSize: 16);
+  static TextStyle animeDetailsEmph = GoogleFonts.notoSans(
+    fontWeight: FontWeight.bold,
+    fontSize: 30,
+  );
 
   static const Color APP_BAR_COLOR = Color(0xff040404);
   static const Color BACKGROUND_COLOR = Color(0xff121212);

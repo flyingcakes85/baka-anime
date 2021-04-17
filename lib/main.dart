@@ -3,6 +3,7 @@ import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/anime_classes/trending_anime.dart';
 import 'package:animeapidemo/widgets/trendingCard.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'BAKA CLUB',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
