@@ -60,25 +60,39 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Consts.APP_BAR_COLOR,
       ),
       backgroundColor: Consts.BACKGROUND_COLOR,
-      body: Column(
-        children: [
-          Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(18),
-              child:
-                  Heading(leadingIcon: Icons.trending_up, label: "Trending")),
-          FutureBuilder<TrendingAnime>(
-            future: futureAnime,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return TrendingCard.trendingCard(snapshot);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              return Center(child: CircularProgressIndicator());
-            },
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                margin: EdgeInsets.all(18),
+                child:
+                    Heading(leadingIcon: Icons.trending_up, label: "Trending")),
+            FutureBuilder<TrendingAnime>(
+              future: futureAnime,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return TrendingCard.trendingCard(snapshot);
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+            Container(
+                width: double.infinity,
+                margin: EdgeInsets.all(18),
+                child: Heading(
+                    leadingIcon: Icons.live_tv_outlined,
+                    label: "Your Watchlist")),
+            Container(
+              height: 800,
+              child: Center(
+                child: Text("To be implemented"),
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Consts.shade,
