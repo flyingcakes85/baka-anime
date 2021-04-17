@@ -1,5 +1,7 @@
 import 'package:animeapidemo/anime_classes/anime_super.dart';
 import 'package:animeapidemo/consts.dart';
+import 'package:animeapidemo/widgets/heading_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,20 +102,9 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                SizedBox(width: 14),
-                Icon(
-                  Icons.description_outlined,
-                  color: Consts.shade,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  "Synopsis",
-                  textAlign: TextAlign.left,
-                  style: Consts.categoryHeading,
-                ),
-              ],
+            AnimePageHeadings(
+              leadingIcon: Icons.description_outlined,
+              label: "Synopsis",
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -123,20 +114,9 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
                 style: Consts.animeDetailsText,
               ),
             ),
-            Row(
-              children: [
-                SizedBox(width: 14),
-                Icon(
-                  Icons.info_outline,
-                  color: Consts.shade,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  "Content Rating",
-                  textAlign: TextAlign.left,
-                  style: Consts.categoryHeading,
-                )
-              ],
+            AnimePageHeadings(
+              leadingIcon: Icons.info_outline,
+              label: "Content Rating",
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -158,6 +138,26 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
           ],
         ),
       )),
+    );
+  }
+}
+
+class AnimePageHeadings extends StatelessWidget {
+  const AnimePageHeadings({
+    Key key,
+    @required this.leadingIcon,
+    @required this.label,
+  }) : super(key: key);
+
+  final IconData leadingIcon;
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(width: 14),
+        Heading(leadingIcon: leadingIcon, label: label),
+      ],
     );
   }
 }

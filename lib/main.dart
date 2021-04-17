@@ -3,6 +3,7 @@ import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/anime_classes/trending_anime.dart';
 import 'package:animeapidemo/widgets/trendingCard.dart';
+import 'package:animeapidemo/widgets/heading_widget.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -62,23 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.all(18),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.trending_up,
-                  color: Consts.shade,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  "Trending",
-                  textAlign: TextAlign.left,
-                  style: Consts.categoryHeading,
-                ),
-              ],
-            ),
-          ),
+              width: double.infinity,
+              margin: EdgeInsets.all(18),
+              child:
+                  Heading(leadingIcon: Icons.trending_up, label: "Trending")),
           FutureBuilder<TrendingAnime>(
             future: futureAnime,
             builder: (context, snapshot) {
