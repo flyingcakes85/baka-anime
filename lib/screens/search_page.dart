@@ -68,19 +68,18 @@ class _SearchPageState extends State<SearchPage> {
                         future: animeSearchResult,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return Container(
-                                height: 850,
-                                child: ListView.separated(
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return SizedBox(height: 12);
-                                    },
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: snapshot.data.data.length,
-                                    itemBuilder: (context, index) {
-                                      return AnimeCard.animeCard(
-                                          snapshot, index);
-                                    }));
+                            return ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(height: 12);
+                                },
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data.data.length,
+                                itemBuilder: (context, index) {
+                                  return AnimeCard.animeCard(snapshot, index);
+                                });
                           } else if (snapshot.hasError) {
                             return Text("${snapshot.error}");
                           }

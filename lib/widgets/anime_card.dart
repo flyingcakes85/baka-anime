@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animeapidemo/anime_classes/anime_data.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/screens/animeDetails.dart';
@@ -52,8 +54,41 @@ class AnimeCard {
               child: Container(
                 width: 174,
                 child: Text(
-                  snapshot.data.data.elementAt(index).attributes.titles.en ??
-                      "Unknown",
+                  ((snapshot.data.data.elementAt(index).attributes.titles.en == null || snapshot.data.data.elementAt(index).attributes.titles.en == "")
+                          ? null
+                          : snapshot.data.data
+                              .elementAt(index)
+                              .attributes
+                              .titles
+                              .en) ??
+                      ((snapshot.data.data.elementAt(index).attributes.titles.enUs == null ||
+                              snapshot.data.data.elementAt(index).attributes.titles.enUs ==
+                                  "")
+                          ? null
+                          : snapshot.data.data
+                              .elementAt(index)
+                              .attributes
+                              .titles
+                              .enUs) ??
+                      ((snapshot.data.data.elementAt(index).attributes.titles.enJp == null ||
+                              snapshot.data.data.elementAt(index).attributes.titles.enJp ==
+                                  "")
+                          ? null
+                          : snapshot.data.data
+                              .elementAt(index)
+                              .attributes
+                              .titles
+                              .enJp) ??
+                      (snapshot.data.data.elementAt(index).attributes.titles.jaJp != null
+                          ? utf8.decode(latin1.encode(snapshot.data.data.elementAt(index).attributes.titles.jaJp),
+                              allowMalformed: true)
+                          : null) ??
+                      (snapshot.data.data.elementAt(index).attributes.titles.koKr != null
+                          ? utf8.decode(
+                              latin1.encode(snapshot.data.data.elementAt(index).attributes.titles.koKr),
+                              allowMalformed: true)
+                          : null) ??
+                      "unknown",
                   overflow: TextOverflow.fade,
                   maxLines: 2,
                   style: Consts.trendCardHeading,
