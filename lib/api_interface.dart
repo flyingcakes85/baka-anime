@@ -1,6 +1,5 @@
 import 'package:animeapidemo/anime_classes/anime_details.dart';
-import 'package:animeapidemo/anime_classes/searchResult.dart';
-import 'package:animeapidemo/anime_classes/trending_anime.dart';
+import 'package:animeapidemo/anime_classes/anime_data.dart';
 import 'package:http/http.dart' as http;
 
 class ApiInterface {
@@ -19,14 +18,14 @@ class ApiInterface {
     }
   }
 
-  static Future<TrendingAnime> fetchTrendingAnime() async {
+  static Future<AnimeData> fetchTrendingAnime() async {
     final response =
         await http.get(Uri.https('kitsu.io', '/api/edge/trending/anime'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return trendingAnimeFromMap(response.body);
+      return animeDataResultsFromMap(response.body);
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -34,7 +33,7 @@ class ApiInterface {
     }
   }
 
-  static Future<AnimeSearchResult> fetchSearchResults(String searchTerm) async {
+  static Future<AnimeData> fetchSearchResults(String searchTerm) async {
     final response = await http.get(
         Uri.parse("https://kitsu.io/api/edge/anime?filter[text]=" + searchTerm),
         headers: {'Content-Type': 'application/json'});
@@ -42,7 +41,7 @@ class ApiInterface {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return animeSearchResultsFromMap(response.body);
+      return animeDataResultsFromMap(response.body);
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.

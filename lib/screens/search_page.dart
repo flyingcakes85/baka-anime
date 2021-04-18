@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animeapidemo/consts.dart';
-import 'package:animeapidemo/anime_classes/searchResult.dart';
+import 'package:animeapidemo/anime_classes/anime_data.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/widgets/anime_card.dart';
 
@@ -12,7 +12,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Future<AnimeSearchResult> animeSearchResult;
+  Future<AnimeData> animeSearchResult;
   bool isSearching;
 
   void initState() {
@@ -64,12 +64,23 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 SizedBox(height: 12),
                 isSearching
-                    ? FutureBuilder<AnimeSearchResult>(
+                    ? FutureBuilder<AnimeData>(
                         future: animeSearchResult,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            print(snapshot.data.data.length);
-                            return AnimeCard.animeCard(snapshot);
+                            return Container(
+                                height: 850,
+                                child: ListView.separated(
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(height: 12);
+                                    },
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: snapshot.data.data.length,
+                                    itemBuilder: (context, index) {
+                                      return AnimeCard.animeCard(
+                                          snapshot, index);
+                                    }));
                           } else if (snapshot.hasError) {
                             return Text("${snapshot.error}");
                           }

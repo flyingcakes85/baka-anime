@@ -1,34 +1,30 @@
 import 'dart:convert';
 import 'package:animeapidemo/anime_classes/anime_super.dart';
 
-AnimeSearchResult animeSearchResultsFromMap(String str) =>
-    AnimeSearchResult.fromMap(json.decode(str));
+AnimeData animeDataResultsFromMap(String str) =>
+    AnimeData.fromMap(json.decode(str));
 
-String animeSearchResultsToMap(AnimeSearchResult data) =>
-    json.encode(data.toMap());
+String animeDataResultsToMap(AnimeData data) => json.encode(data.toMap());
 
-class AnimeSearchResult {
-  AnimeSearchResult({
+class AnimeData {
+  AnimeData({
     this.data,
     this.meta,
     this.links,
   });
 
   List<Datum> data;
-  AnimeSearchResultMeta meta;
-  AnimeSearchResultLinks links;
+  AnimeDataMeta meta;
+  AnimeDataLinks links;
 
-  factory AnimeSearchResult.fromMap(Map<String, dynamic> json) =>
-      AnimeSearchResult(
+  factory AnimeData.fromMap(Map<String, dynamic> json) => AnimeData(
         data: json["data"] == null
             ? null
             : List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
-        meta: json["meta"] == null
-            ? null
-            : AnimeSearchResultMeta.fromMap(json["meta"]),
+        meta: json["meta"] == null ? null : AnimeDataMeta.fromMap(json["meta"]),
         links: json["links"] == null
             ? null
-            : AnimeSearchResultLinks.fromMap(json["links"]),
+            : AnimeDataLinks.fromMap(json["links"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -535,8 +531,8 @@ enum Type { ANIME }
 
 final typeValues = EnumValues({"anime": Type.ANIME});
 
-class AnimeSearchResultLinks {
-  AnimeSearchResultLinks({
+class AnimeDataLinks {
+  AnimeDataLinks({
     this.first,
     this.next,
     this.last,
@@ -546,8 +542,7 @@ class AnimeSearchResultLinks {
   String next;
   String last;
 
-  factory AnimeSearchResultLinks.fromMap(Map<String, dynamic> json) =>
-      AnimeSearchResultLinks(
+  factory AnimeDataLinks.fromMap(Map<String, dynamic> json) => AnimeDataLinks(
         first: json["first"] == null ? null : json["first"],
         next: json["next"] == null ? null : json["next"],
         last: json["last"] == null ? null : json["last"],
@@ -560,15 +555,14 @@ class AnimeSearchResultLinks {
       };
 }
 
-class AnimeSearchResultMeta {
-  AnimeSearchResultMeta({
+class AnimeDataMeta {
+  AnimeDataMeta({
     this.count,
   });
 
   int count;
 
-  factory AnimeSearchResultMeta.fromMap(Map<String, dynamic> json) =>
-      AnimeSearchResultMeta(
+  factory AnimeDataMeta.fromMap(Map<String, dynamic> json) => AnimeDataMeta(
         count: json["count"] == null ? null : json["count"],
       );
 

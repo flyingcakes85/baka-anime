@@ -1,9 +1,9 @@
+import 'package:animeapidemo/anime_classes/anime_data.dart';
 import 'package:animeapidemo/screens/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
-import 'package:animeapidemo/anime_classes/trending_anime.dart';
-import 'package:animeapidemo/widgets/trendingCard.dart';
+import 'package:animeapidemo/widgets/anime_card.dart';
 import 'package:animeapidemo/widgets/heading_widget.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<TrendingAnime> futureAnime;
+  Future<AnimeData> futureAnime;
   @override
   void initState() {
     super.initState();
@@ -69,16 +69,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: EdgeInsets.all(18),
                 child:
                     Heading(leadingIcon: Icons.trending_up, label: "Trending")),
-            FutureBuilder<TrendingAnime>(
-              future: futureAnime,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return TrendingCard.trendingCard(snapshot);
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-                return Center(child: CircularProgressIndicator());
-              },
+            Container(
+              padding: EdgeInsets.only(left: 12),
+              child: FutureBuilder<AnimeData>(
+                future: futureAnime,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    // return TrendingCard.trendingCard(snapshot);
+                    return Container(
+                        height: 155,
+                        child: ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(width: 12);
+                            },
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data.data.length,
+                            itemBuilder: (context, index) {
+                              return AnimeCard.animeCard(snapshot, index);
+                            }));
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
             Container(
                 width: double.infinity,
