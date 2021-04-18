@@ -292,27 +292,59 @@ class PosterImage {
       };
 }
 
+// class Titles {
+//   Titles({
+//     this.en,
+//     this.enJp,
+//     this.jaJp,
+//   });
+
+//   String en;
+//   String enJp;
+//   String jaJp;
+
+//   factory Titles.fromMap(Map<String, dynamic> json) => Titles(
+//         en: json["en"] == null ? null : json["en"],
+//         enJp: json["en_jp"] == null ? null : json["en_jp"],
+//         jaJp: json["ja_jp"] == null ? null : json["ja_jp"],
+//       );
+
+//   Map<String, dynamic> toMap() => {
+//         "en": en == null ? null : en,
+//         "en_jp": enJp == null ? null : enJp,
+//         "ja_jp": jaJp == null ? null : jaJp,
+//       };
+// }
+
 class Titles {
   Titles({
     this.en,
     this.enJp,
     this.jaJp,
+    this.enUs,
+    this.koKr,
   });
 
   String en;
   String enJp;
   String jaJp;
+  String enUs;
+  String koKr;
 
   factory Titles.fromMap(Map<String, dynamic> json) => Titles(
         en: json["en"] == null ? null : json["en"],
         enJp: json["en_jp"] == null ? null : json["en_jp"],
         jaJp: json["ja_jp"] == null ? null : json["ja_jp"],
+        enUs: json["en_us"] == null ? null : json["en_us"],
+        koKr: json["ko_kr"] == null ? null : json["ko_kr"],
       );
 
   Map<String, dynamic> toMap() => {
         "en": en == null ? null : en,
         "en_jp": enJp == null ? null : enJp,
         "ja_jp": jaJp == null ? null : jaJp,
+        "en_us": enUs == null ? null : enUs,
+        "ko_kr": koKr == null ? null : koKr,
       };
 }
 

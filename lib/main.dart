@@ -1,3 +1,4 @@
+import 'package:animeapidemo/screens/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
@@ -86,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     leadingIcon: Icons.live_tv_outlined,
                     label: "Your Watchlist")),
             Container(
-              height: 800,
+              height: 300,
               child: Center(
                 child: Text("To be implemented"),
               ),
@@ -96,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Consts.shade,
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => SearchPage());
+        },
         tooltip: 'SEARCH',
         child: Icon(Icons.search),
       ),
