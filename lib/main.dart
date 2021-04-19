@@ -119,7 +119,42 @@ class _MyHomePageState extends State<MyHomePage> {
                   leadingIcon: Icons.live_tv_outlined, label: "Your Watchlist"),
               SizedBox(height: 18),
               (count == 0)
-                  ? Text("No anime saved")
+                  ? Container(
+                      height: 200,
+                      padding: EdgeInsets.symmetric(horizontal: 46),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.tv_off, color: Consts.shade),
+                                SizedBox(width: 12),
+                                Text(
+                                  "Watchlist Empty",
+                                  style: Consts.animeDetailsText,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 25),
+                            Text(
+                              "Add shows to your watchlist by tapping the star icon on top right on details page.",
+                              textAlign: TextAlign.center,
+                              style: Consts.animeDetailsText,
+                            ),
+                            SizedBox(height: 25),
+                            MaterialButton(
+                              color: Consts.shade,
+                              onPressed: () {},
+                              child: Text(
+                                "EXPLORE",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   : ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
