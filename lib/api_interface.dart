@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ApiInterface {
   static Future<Anime> fetchAnimeDetails(String animeID) async {
+    print("anime id " + animeID);
     final response =
         await http.get(Uri.https('kitsu.io', '/api/edge/anime/' + animeID));
 
@@ -14,6 +15,7 @@ class ApiInterface {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
+      print(response.body);
       throw Exception('Failed to load Anime');
     }
   }

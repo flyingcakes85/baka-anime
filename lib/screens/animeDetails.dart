@@ -1,13 +1,12 @@
 import 'dart:convert';
-
-import 'package:animeapidemo/anime_classes/anime_super.dart';
 import 'package:animeapidemo/anime_classes/anime_details.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/widgets/heading_widget.dart';
-
+import 'package:animeapidemo/watchlist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AnimeDetailsPage extends StatefulWidget {
@@ -16,13 +15,14 @@ class AnimeDetailsPage extends StatefulWidget {
 }
 
 class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
-  Datum anime_1 = Get.arguments;
+  String animeId = Get.arguments;
   Future<Anime> anime;
   String title;
   String localizedTitle;
+  final localStorage = GetStorage();
   void initState() {
     super.initState();
-    anime = ApiInterface.fetchAnimeDetails(anime_1.id.toString());
+    anime = ApiInterface.fetchAnimeDetails(animeId);
   }
 
   @override
@@ -89,8 +89,32 @@ class _AnimeDetailsPageState extends State<AnimeDetailsPage> {
                             child: CircleAvatar(
                               backgroundColor: Consts.BACKGROUND_COLOR,
                               child: IconButton(
-                                icon: Icon(Icons.star),
-                                onPressed: () {},
+                                icon: Icon(
+                                  Watchlist.watchlistContainsId(
+                                          snapshot.data.data.id)
+                                      ? Icons.star
+                                      : Icons.star_border,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  bool isInWatchlist =
+                                      Watchlist.watchlistContainsId(
+                                          snapshot.data.data.id);
+                                  if (isInWatchlist) {
+                                    setState(() {
+                                      print("removing");
+                                      Watchlist.removeFromWatchList(
+                                          snapshot.data.data.id);
+                                    });
+                                  } else {
+                                    setState(() {
+                                      print("adding");
+
+                                      Watchlist.saveToWatchList(
+                                          snapshot.data.data.id);
+                                    });
+                                  }
+                                },
                               ),
                             )),
                         Positioned(

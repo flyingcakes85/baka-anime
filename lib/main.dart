@@ -1,13 +1,16 @@
 import 'package:animeapidemo/anime_classes/anime_data.dart';
 import 'package:animeapidemo/screens/search_page.dart';
+import 'package:animeapidemo/watchlist.dart';
 import 'package:flutter/material.dart';
 import 'package:animeapidemo/consts.dart';
 import 'package:animeapidemo/api_interface.dart';
 import 'package:animeapidemo/widgets/anime_card.dart';
 import 'package:animeapidemo/widgets/heading_widget.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -38,10 +41,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<AnimeData> futureAnime;
+  final localData = GetStorage();
+
+  int count;
+  List<String> watchlist = [];
+  // List<Future<Anime>> watchlistAnime = [];
   @override
   void initState() {
     super.initState();
     futureAnime = ApiInterface.fetchTrendingAnime();
+    count = localData.read('count') ?? 0;
+    if (count > 0) watchlist = Watchlist.getWatchlistIds();
+    // watchlistAnime[0] = ApiInterface.fetchAnimeDetails(watchlist.elementAt(0));
+    print("from the main");
+    print(watchlist);
+    localData.listen(() {
+      print("localdata updated");
+      setState(() {
+        count = localData.read('count');
+        watchlist = Watchlist.getWatchlistIds();
+      });
+    });
   }
 
   @override
@@ -61,53 +81,60 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Consts.APP_BAR_COLOR,
       ),
       backgroundColor: Consts.BACKGROUND_COLOR,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(18),
-                child:
-                    Heading(leadingIcon: Icons.trending_up, label: "Trending")),
-            Container(
-              padding: EdgeInsets.only(left: 12),
-              child: FutureBuilder<AnimeData>(
-                future: futureAnime,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    // return TrendingCard.trendingCard(snapshot);
-                    return Container(
-                        height: 155,
-                        child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(width: 12);
-                            },
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data.data.length,
-                            itemBuilder: (context, index) {
-                              return AnimeCard.animeCard(snapshot, index);
-                            }));
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
+      body: Container(
+        margin: EdgeInsets.all(18),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Heading(leadingIcon: Icons.trending_up, label: "Trending"),
+              SizedBox(height: 18),
+              Container(
+                // padding: EdgeInsets.only(left: 12),
+                child: FutureBuilder<AnimeData>(
+                  future: futureAnime,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // return TrendingCard.trendingCard(snapshot);
+                      return Container(
+                          height: 175,
+                          child: ListView.separated(
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(width: 12);
+                              },
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data.data.length,
+                              itemBuilder: (context, index) {
+                                return AnimeCard.animeCard(snapshot, index);
+                              }));
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
               ),
-            ),
-            Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(18),
-                child: Heading(
-                    leadingIcon: Icons.live_tv_outlined,
-                    label: "Your Watchlist")),
-            Container(
-              height: 300,
-              child: Center(
-                child: Text("To be implemented"),
-              ),
-            )
-          ],
+              SizedBox(height: 18),
+              Heading(
+                  leadingIcon: Icons.live_tv_outlined, label: "Your Watchlist"),
+              SizedBox(height: 18),
+              (count == 0)
+                  ? Text("No anime saved")
+                  : ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(height: 12);
+                      },
+                      scrollDirection: Axis.vertical,
+                      itemCount: watchlist.length,
+                      itemBuilder: (context, index) {
+                        return AnimeCard.animeCardWatchlist(
+                            watchlist.elementAt(index));
+                      }),
+              Container(height: 62),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
