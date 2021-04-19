@@ -2,7 +2,7 @@
     package="com.example.animeapidemo">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="animeapidemo"
+        android:label="Baka Anime"
         android:icon="@mipmap/ic_launcher">
         <!-- Required to fetch data from the internet. -->
 

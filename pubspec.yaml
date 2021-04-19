@@ -32,6 +32,7 @@ dependencies:
   http: ^0.13.1
   get: ^4.1.4
   get_storage: ^2.0.2
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:

@@ -86,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                           return CircularProgressIndicator();
                         },
                       )
-                    : Text("Search Something"),
+                    : Container(),
               ],
             ),
           ),

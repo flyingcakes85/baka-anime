@@ -1,4 +1,5 @@
 import 'package:animeapidemo/anime_classes/anime_data.dart';
+import 'package:animeapidemo/screens/about.dart';
 import 'package:animeapidemo/screens/search_page.dart';
 import 'package:animeapidemo/watchlist.dart';
 import 'package:flutter/material.dart';
@@ -52,11 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
     futureAnime = ApiInterface.fetchTrendingAnime();
     count = localData.read('count') ?? 0;
     if (count > 0) watchlist = Watchlist.getWatchlistIds();
-    // watchlistAnime[0] = ApiInterface.fetchAnimeDetails(watchlist.elementAt(0));
-    print("from the main");
     print(watchlist);
     localData.listen(() {
-      print("localdata updated");
       setState(() {
         count = localData.read('count');
         watchlist = Watchlist.getWatchlistIds();
@@ -68,10 +66,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Container(
-        child: Container(),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width * 0.75,
+        padding: EdgeInsets.all(32),
+        decoration: BoxDecoration(color: Consts.APP_BAR_COLOR),
+        child: Text(
+          "This drawer is the only non funtional component here",
+          textAlign: TextAlign.center,
+          style: Consts.animeDetailsText,
+        ),
       ),
       appBar: AppBar(
-        actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                Get.to(() => AboutPage());
+              })
+        ],
         title: Center(
           child: Text(
             Consts.APP_TITLE,
@@ -86,15 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Heading(leadingIcon: Icons.trending_up, label: "Trending"),
+              Heading(leadingIcon: Icons.trending_up, label: Consts.TRENDING),
               SizedBox(height: 18),
               Container(
-                // padding: EdgeInsets.only(left: 12),
                 child: FutureBuilder<AnimeData>(
                   future: futureAnime,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      // return TrendingCard.trendingCard(snapshot);
                       return Container(
                           height: 175,
                           child: ListView.separated(
@@ -116,11 +126,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 18),
               Heading(
-                  leadingIcon: Icons.live_tv_outlined, label: "Your Watchlist"),
-              SizedBox(height: 18),
+                  leadingIcon: Icons.live_tv_outlined,
+                  label: Consts.YOUR_WATCHLIST),
+              SizedBox(height: 28),
               (count == 0)
                   ? Container(
-                      height: 200,
+                      height: 150,
                       padding: EdgeInsets.symmetric(horizontal: 46),
                       child: Center(
                         child: Column(
@@ -131,26 +142,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Icon(Icons.tv_off, color: Consts.shade),
                                 SizedBox(width: 12),
                                 Text(
-                                  "Watchlist Empty",
+                                  Consts.EMPTY_WATCHLIST,
                                   style: Consts.animeDetailsText,
                                 ),
                               ],
                             ),
                             SizedBox(height: 25),
                             Text(
-                              "Add shows to your watchlist by tapping the star icon on top right on details page.",
+                              Consts.EMPTY_WATCHLIST_HINT,
                               textAlign: TextAlign.center,
                               style: Consts.animeDetailsText,
                             ),
                             SizedBox(height: 25),
-                            MaterialButton(
-                              color: Consts.shade,
-                              onPressed: () {},
-                              child: Text(
-                                "EXPLORE",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            )
                           ],
                         ),
                       ),
